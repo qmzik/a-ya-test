@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
+import CartLine from '../components/CartLine'
 import Layout from '../components/Layout'
 import StatusMessage from '../components/StatusMessage'
 import { useCart } from '../context/CartContext'
-import { createProductHash } from '../hooks/useHashRoute'
 import { formatPrice } from '../utils/catalog'
 import { isValidPromoCode, normalizePromoCode } from '../utils/cart'
-import { displayText } from '../utils/text'
 
 export default function CartPage() {
   const {
@@ -78,64 +77,13 @@ export default function CartPage() {
         <div className="cart-layout">
           <section className="cart-lines" aria-label="Товары в корзине">
             {resolvedLines.map((line) => (
-              <article className="cart-line" key={line.key}>
-                <a
-                  className="cart-line-image"
-                  href={createProductHash(line.product.id, {
-                    colorId: line.color.id,
-                    sizeId: line.size.id,
-                  })}
-                >
-                  <img
-                    src={line.color.images[0]}
-                    alt={`${displayText(line.product.name)}, ${displayText(line.color.name)}`}
-                  />
-                </a>
-                <div className="cart-line-info">
-                  <a
-                    className="cart-line-title"
-                    href={createProductHash(line.product.id, {
-                      colorId: line.color.id,
-                      sizeId: line.size.id,
-                    })}
-                  >
-                    {displayText(line.product.name)}
-                  </a>
-                  <p>
-                    Цвет: {displayText(line.color.name)} · Размер: {line.size.name}
-                  </p>
-                  <p>{formatPrice(line.unitPrice)} ₽ за шт.</p>
-                </div>
-                <div className="quantity-control" aria-label="Количество">
-                  <button
-                    type="button"
-                    onClick={() => decrementLine(line.key)}
-                    disabled={line.quantity === 1}
-                    aria-label={`Уменьшить количество ${displayText(line.product.name)}`}
-                  >
-                    −
-                  </button>
-                  <strong>{line.quantity}</strong>
-                  <button
-                    type="button"
-                    onClick={() => incrementLine(line.key)}
-                    aria-label={`Увеличить количество ${displayText(line.product.name)}`}
-                  >
-                    +
-                  </button>
-                </div>
-                <strong className="cart-line-total">
-                  {formatPrice(line.lineTotal)} ₽
-                </strong>
-                <button
-                  type="button"
-                  className="remove-button"
-                  onClick={() => removeLine(line.key)}
-                  aria-label={`Удалить ${displayText(line.product.name)} из корзины`}
-                >
-                  Удалить
-                </button>
-              </article>
+              <CartLine
+                line={line}
+                key={line.key}
+                onDecrement={decrementLine}
+                onIncrement={incrementLine}
+                onRemove={removeLine}
+              />
             ))}
           </section>
 

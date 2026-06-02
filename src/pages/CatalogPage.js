@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
 import Layout from '../components/Layout'
+import PageHeading from '../components/PageHeading'
 import ProductCard from '../components/ProductCard'
 import StatusMessage from '../components/StatusMessage'
 import { getProducts } from '../services/api'
@@ -46,11 +47,11 @@ export default function CatalogPage() {
 
   return (
     <Layout>
-      <section className="page-heading">
-        <p className="eyebrow">Одежда и аксессуары</p>
-        <h1>Каталог товаров</h1>
-        <p>Выберите вещь, цвет и размер, затем добавьте покупку в корзину.</p>
-      </section>
+      <PageHeading
+        eyebrow="Одежда и аксессуары"
+        title="Каталог товаров"
+        description="Выберите вещь, цвет и размер, затем добавьте покупку в корзину."
+      />
 
       <section className="catalog-controls" aria-label="Фильтры каталога">
         <label className="field">

@@ -8,6 +8,33 @@ import {
 } from '../utils/catalog'
 import { displayText } from '../utils/text'
 
+/**
+ * @typedef {Object} ProductColor
+ * @property {number} id
+ * @property {string} name
+ * @property {string[]} images
+ * @property {string} price
+ * @property {string} description
+ * @property {number[]} sizes
+ */
+
+/**
+ * @typedef {Object} Product
+ * @property {number} id
+ * @property {string} name
+ * @property {number} categoryId
+ * @property {string} brand
+ * @property {ProductColor[]} colors
+ */
+
+/**
+ * @typedef {Object} ProductCardProps
+ * @property {Product} product
+ */
+
+/**
+ * @param {ProductCardProps} props
+ */
 export default function ProductCard({ product }) {
   const inStock = isProductInStock(product)
 
