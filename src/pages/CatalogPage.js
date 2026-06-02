@@ -1,16 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
 
 import Layout from '../components/Layout'
+import ProductCard from '../components/ProductCard'
 import StatusMessage from '../components/StatusMessage'
 import { getProducts } from '../services/api'
-import {
-  filterAndSortProducts,
-  formatPrice,
-  getMinimumPrice,
-  getProductPreviewImage,
-  isProductInStock,
-} from '../utils/catalog'
-import { displayText } from '../utils/text'
+import { filterAndSortProducts } from '../utils/catalog'
 
 export default function CatalogPage() {
   const [products, setProducts] = useState([])
@@ -108,34 +102,9 @@ export default function CatalogPage() {
 
       {status === 'success' && visibleProducts.length > 0 && (
         <section className="product-grid" aria-label="Список товаров">
-          {visibleProducts.map((product) => {
-            const inStock = isProductInStock(product)
-
-            return (
-              <a
-                className="product-card"
-                href={`#/product/${product.id}`}
-                key={product.id}
-              >
-                <div className="product-image-frame">
-                  <img
-                    src={getProductPreviewImage(product)}
-                    alt={displayText(product.name)}
-                  />
-                </div>
-                <div className="product-card-body">
-                  <p className="product-card-brand">{product.brand}</p>
-                  <h2>{displayText(product.name)}</h2>
-                  <div className="product-card-meta">
-                    <strong>от {formatPrice(getMinimumPrice(product))} ₽</strong>
-                    <span className={inStock ? 'stock-label' : 'stock-label out'}>
-                      {inStock ? 'В наличии' : 'Нет в наличии'}
-                    </span>
-                  </div>
-                </div>
-              </a>
-            )
-          })}
+          {visibleProducts.map((product) => (
+            <ProductCard product={product} key={product.id} />
+          ))}
         </section>
       )}
     </Layout>
